@@ -9,7 +9,14 @@ import TodoList from "./TodoList.jsx";
 
 const Todo = () => {
 
-  const[tasks, setTasks] = useState([])
+  const[tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem('tasks')
+
+    if (savedTasks) {
+      return JSON.parse(savedTasks)
+    }
+    return []
+  })
   const [newTaskTitle, setNewTaskTitle] = useState('')
 
   const deleteAllTasks = () => {
@@ -55,8 +62,9 @@ const Todo = () => {
     }
   }
 
-  useEffect( () => {
 
+  useEffect( () => {
+    localStorage.setItem('tasks', JSON.stringify(tasks))
   }, [tasks])
 
   return (
