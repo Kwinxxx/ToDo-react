@@ -1,6 +1,7 @@
 const SearchTaskForm = (props) => {
   const {
-    onSearchInput,
+    searchQuery,
+    setSearchQuery,
   } = props
 
 
@@ -15,7 +16,9 @@ const SearchTaskForm = (props) => {
         label="Search Task"
         id="search-task"
         type="search"
-        onInput = {(event) => {onSearchInput(event.target.value)}}
+        onInput = {(event) => {setSearchQuery(event.target.value)}}
+        value={searchQuery}
+
       />
     </form>
   )

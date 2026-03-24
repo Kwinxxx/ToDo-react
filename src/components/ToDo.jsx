@@ -18,6 +18,7 @@ const Todo = () => {
     return []
   })
   const [newTaskTitle, setNewTaskTitle] = useState('')
+  const [searchQuery,setSearchQuery] = useState('')
 
   const deleteAllTasks = () => {
     const isConfirmed = confirm('Are you sure you want delete all Tasks?')
@@ -45,10 +46,6 @@ const Todo = () => {
     )
   }
 
-  const filterTasks = (query) => {
-    console.log(`Поиск  - ${query}`)
-  }
-
   const addTask = () => {
     if (newTaskTitle.trim().length > 0) {
       const newTask = {
@@ -59,6 +56,7 @@ const Todo = () => {
 
       setTasks([...tasks, newTask])
       setNewTaskTitle('')
+      setSearchQuery('')
     }
   }
 
@@ -66,6 +64,11 @@ const Todo = () => {
   useEffect( () => {
     localStorage.setItem('tasks', JSON.stringify(tasks))
   }, [tasks])
+
+  const clearSearchQuery = searchQuery.trim().toLowerCase()
+  const filteredTasks = clearSearchQuery.length > 0
+    ? tasks.filter(({title}) => title.toLowerCase().includes(clearSearchQuery))
+    : null
 
   return (
     <div className="todo">
@@ -76,16 +79,19 @@ const Todo = () => {
       setNewTaskTitle = {setNewTaskTitle}
       />
       <SearchTaskForm
-      onSearchInput = {filterTasks}
+      searchQuery = {searchQuery}
+      setSearchQuery = {setSearchQuery}
       />
       <ToDoInfo
       total={tasks.length}
       done={tasks.filter((task) => task.isDone).length}
       onDeleteAllButtonClick = {deleteAllTasks}
       />
-      <TodoList tasks={tasks}
-      onDeleteTaskButtonClick = {deleteTask}
-      onTaskCompleteChange = {toggleTaskComplete}
+      <TodoList
+        tasks={tasks}
+        filteredTasks = {filteredTasks}
+        onDeleteTaskButtonClick = {deleteTask}
+        onTaskCompleteChange = {toggleTaskComplete}
       />
     </div>
   )
