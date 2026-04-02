@@ -1,14 +1,12 @@
 import ToDoItem from "./ToDoItem.jsx";
+import {useContext} from "react";
+import {TasksContext} from "../Context/TasksContext.jsx";
 
-const TodoList = (props) => {
+const TodoList = () => {
   const {
-    tasks = [],
-    onDeleteTaskButtonClick,
-    onTaskCompleteChange,
+    tasks,
     filteredTasks,
-    firstInCompleteTaskId,
-    firstInCompleteTaskRef,
-  } = props
+  } = useContext(TasksContext)
 
   const hasTasks = tasks.length > 0
   const isEmptyFilteredTasks = filteredTasks?.length === 0
@@ -31,9 +29,6 @@ const TodoList = (props) => {
         <ToDoItem
           className = "todo__item"
           key = {task.id}
-          ref={task.id === firstInCompleteTaskId ? firstInCompleteTaskRef : null}
-          onDeleteTaskButtonClick = {onDeleteTaskButtonClick}
-          onTaskCompleteChange = {onTaskCompleteChange}
           {...task}
         />
       ))}

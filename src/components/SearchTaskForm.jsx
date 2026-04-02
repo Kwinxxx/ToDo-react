@@ -1,8 +1,12 @@
-const SearchTaskForm = (props) => {
+import {useContext} from "react";
+import Field from "./Field.jsx";
+import {TasksContext} from "../Context/TasksContext.jsx";
+
+const SearchTaskForm = () => {
   const {
     searchQuery,
     setSearchQuery,
-  } = props
+  } = useContext(TasksContext)
 
 
 
@@ -24,6 +28,5 @@ const SearchTaskForm = (props) => {
   )
 }
 
-import Field from "./Field.jsx";
 
 export default SearchTaskForm

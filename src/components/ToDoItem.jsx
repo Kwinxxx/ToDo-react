@@ -1,36 +1,47 @@
+import {useContext} from "react";
+import {TasksContext} from "../Context/TasksContext.jsx";
+import RouterLink from "./RouterLink.jsx";
+
 const ToDoItem = (props) => {
   const {
     className = '',
     title,
     isDone,
     id,
-    onDeleteTaskButtonClick,
-    onTaskCompleteChange,
-    ref,
   } = props
 
-
+  const {
+    firstInCompleteTaskId,
+    firstInCompleteTaskRef,
+    deleteTask,
+    toggleTaskComplete,
+  } = useContext(TasksContext)
 
   return (
-    <li className={`todo-item ${className}`} ref={ref}>
+    <li className={`todo-item ${className}`} ref={id === firstInCompleteTaskId ? firstInCompleteTaskRef : null}>
           <input
             className="todo-item__checkbox"
             id={id}
             type="checkbox"
             checked={isDone}
-            onChange={({target}) => onTaskCompleteChange(id, target.checked)}
+            onChange={({target}) => toggleTaskComplete(id, target.checked)}
           />
           <label
-            className="todo-item__label"
+            className="todo-item__label visually-hidden"
             htmlFor={id}
           >
             {title}
           </label>
+
+          <RouterLink to={`/tasks/${id}`} aria-label="Task Detail Page">
+            {title}
+          </RouterLink>
+      
           <button
             className="todo-item__delete-button"
             aria-label="Delete"
             title="Delete"
-            onClick={() => onDeleteTaskButtonClick(id)}
+            onClick={() => deleteTask(id)}
           >
             <svg
               width="20"
