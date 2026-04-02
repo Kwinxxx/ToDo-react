@@ -1,5 +1,4 @@
-import { useState,useRef, useCallback, createContext } from "react";
-import {useEffect} from "react";
+import { createContext } from "react";
 import UseTasks from "../hooks/UseTasks.js";
 import UseInCompleteTaskScroll from "../hooks/UseInCompleteTaskScroll.js";
 
@@ -14,13 +13,14 @@ export const TasksProvider = (props) => {
     deleteAllTasks,
     deleteTask,
     toggleTaskComplete,
-
     newTaskTitle,
     setNewTaskTitle,
     searchQuery,
     setSearchQuery,
     addTask,
     newTaskInputRef,
+    disappearingTaskId,
+    appearingTaskId,
   } = UseTasks()
 
 const {firstInCompleteTaskId,
@@ -43,6 +43,8 @@ const {firstInCompleteTaskId,
         setSearchQuery,
         addTask,
         newTaskInputRef,
+        disappearingTaskId,
+        appearingTaskId,
       }}
     >
       {children}

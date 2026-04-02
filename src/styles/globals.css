@@ -19,3 +19,8 @@ button {
   outline-offset: 4px;
   transition-duration: 0s !important;
 }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
